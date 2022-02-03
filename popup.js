@@ -9,6 +9,13 @@ window.addEventListener("load", function () {
     loader.classList.add("fade-out");
   }, 800);
   startTime();
+
+  let date = new Date();
+  let month = date.getMonth();
+  let day = date.getDate();
+  let datestring = String(day) + String(month + 1);
+
+  console.log(datestring);
 });
 
 //Date Display
