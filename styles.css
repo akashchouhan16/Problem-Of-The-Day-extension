@@ -1,7 +1,8 @@
 body {
-  height: 270px;
+  height: 200px;
   width: 450px;
   font-family: "Montserrat", sans-serif;
+  font-size: small;
 }
 
 .main-container {
@@ -37,7 +38,7 @@ body {
 }
 
 .header {
-  font-size: 1.45rem;
+  font-size: 1.25rem;
   font-weight: 900;
   margin: auto;
   margin-top: 1.8vh;
@@ -56,10 +57,10 @@ body {
 }
 
 #question {
-  font-size: 0.84rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   word-wrap: break-word;
-  padding: 4px;
+  padding-bottom: .35rem;
 }
 
 #date {
@@ -77,8 +78,8 @@ body {
 
 .btn-text {
   font-family: "Montserrat", sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 0.75rem;
   margin: 0 auto;
 }
 
@@ -98,7 +99,7 @@ body {
 }
 
 .bt-container {
-  margin-top: 6vh;
+  margin-top: 5vh;
 }
 
 .topic-container {
