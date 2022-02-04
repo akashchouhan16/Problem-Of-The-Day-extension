@@ -55,6 +55,11 @@ function startTime() {
 
   let hours = date.getHours();
   let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+
+  let strTimeLeft =
+    24 - hours + "hr " + (60 - minutes) + "m " + (60 - seconds) + "s left";
+
   let ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12;
   hours = hours ? hours : 12;
@@ -62,6 +67,8 @@ function startTime() {
   let strTime = hours + ":" + minutes + " " + ampm;
 
   document.getElementById("time").innerHTML = strTime;
+  document.getElementById("timer").innerHTML = strTimeLeft;
+
   setTimeout(startTime, 1000);
 }
 
