@@ -25,7 +25,7 @@ A Google Chrome Browser extension to provide a daily practice problem on Data St
 ### Steps
 * Install the files locally:
   ```
-  git clone https://github.com/Hack-Repository/POTD-UI.git 
+  git clone https://github.com/Hack-Repository/POTD-GoogleChromeExtension.git  
   ```
 * Open Chrome and navigate to:
   ```
