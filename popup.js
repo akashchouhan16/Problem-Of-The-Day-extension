@@ -1,8 +1,7 @@
 //Preloader
-
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-let url = ''
+let url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
 let ui_elements = {
   problem_id: "",
   problem_statement: "",
@@ -10,12 +9,7 @@ let ui_elements = {
   link: "",
 };
 
-
 window.addEventListener("load", async function () {
-  setTimeout(function () {
-    loadergif.classList.add("fade-out-fast");
-    loader.classList.add("fade-out");
-  }, 800);
   startTime();
 
   let date = new Date();
@@ -23,28 +17,29 @@ window.addEventListener("load", async function () {
   let day = date.getDate();
   let datestring = String(day) + String(month + 1);
 
+  url += datestring;
+
   // Connection to Backend:
-  try{
+  try {
     const temp = await fetch(url);
     const data = await temp.json();
-    console.log(data.response);
+
     ui_elements.problem_id = data.response.problem_id;
     ui_elements.topic = data.response.topic;
     ui_elements.link = data.response.link;
     ui_elements.problem_statement = data.response.problem;
-    console.log(ui_elements);
-    console.log(ui_elements.problem_statement);
 
     // Update UI:
     updateUI();
-
-}catch(e){ 
+  } catch (e) {
     console.log(e.message);
   }
+
+  loadergif.classList.add("fade-out-fast");
+  loader.classList.add("fade-out");
 });
 
 //Date Display
-
 let dt = new Date();
 
 const options = {
@@ -71,14 +66,19 @@ function startTime() {
   setTimeout(startTime, 1000);
 }
 
-const updateUI = ()=>{
+const updateUI = () => {
   // Question description
   let question = ui_elements.problem_statement;
-  if (question.length > 50) {
-    question = question.substring(0, 50) + "... ";
-  }
+  if (question.length > 55) {
+    // Question description tooltip
+    let tooltip = document.getElementById("q-tooltip");
+    tooltip.classList.add("tooltip");
+    document.getElementById("question-tooltip").innerHTML = question;
 
+    question = question.substring(0, 55) + "... ";
+  }
   document.getElementById("question").innerHTML = question;
+
   // Question topic
   let topic = ui_elements.topic;
   document.getElementById("topic").innerHTML = topic;
@@ -86,6 +86,6 @@ const updateUI = ()=>{
   // Question link
   let link = ui_elements.link;
   document.getElementById("solve-btn").addEventListener("click", function () {
-  window.open(link, "_blank");
+    window.open(link, "_blank");
   });
-}
+};

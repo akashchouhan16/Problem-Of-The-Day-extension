@@ -1,10 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "POTD",
-  "description": "Solve a new DSA problem daily.",
-  "version": "1.0.0",
+  "name": "POTD - Problem Of The Day",
+  "description": "Solve a new DSA problem every day.",
+  "version": "0.0.0.1",
+  "icons": { "16": "/images/", "48": "/images/", "128": "/images/" },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": { "16": "/images/", "48": "/images/", "128": "/images/" }
   },
   "permissions": ["activeTab"]
 }
