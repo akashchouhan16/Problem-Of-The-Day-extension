@@ -16,7 +16,6 @@ window.addEventListener("load", async function () {
   let month = date.getMonth();
   let day = date.getDate();
   let datestring = String(day) + String(month + 1);
-  console.log(datestring);
 
   // Connection to Backend:
   try {

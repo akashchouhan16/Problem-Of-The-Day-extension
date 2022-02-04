@@ -168,14 +168,6 @@ body {
   transform: scale(1.12);
 }
 
-.zoom-2 {
-  transition: transform 0.2s;
-}
-
-.zoom-2:hover {
-  transform: scale(1.05);
-}
-
 .tooltiptext {
   visibility: hidden;
   background-color: rgb(70, 70, 70);
@@ -203,6 +195,10 @@ body {
   opacity: 1;
 }
 
+.tap-icon:hover {
+  animation: none;
+}
+
 #question-topic {
   color: rgb(190, 190, 190);
   font-weight: 600;
@@ -215,16 +211,39 @@ body {
 }
 
 .tap-icon {
-  opacity: 25%;
-  height: 20px;
-  border-radius: 30%;
+  opacity: 90%;
+  height: 25px;
+  width: 25px;
   display: inline-block;
   position: relative;
-  top: 5px;
+  top: 2px;
   margin-right: 8px;
   cursor: pointer;
+  animation: heartbeat 2s infinite;
+  animation-delay: 1s;
 }
 
 .q-container img {
   float: right;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(1.1);
+  }
+  20% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
