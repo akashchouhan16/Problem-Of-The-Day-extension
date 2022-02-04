@@ -190,15 +190,6 @@ body {
   word-wrap: break-word;
 }
 
-.tap-icon:hover ~ .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
-.tap-icon:hover {
-  animation: none;
-}
-
 #question-topic {
   color: rgb(190, 190, 190);
   font-weight: 600;
@@ -220,7 +211,16 @@ body {
   margin-right: 8px;
   cursor: pointer;
   animation: heartbeat 2s infinite;
-  animation-delay: 1s;
+  animation-delay: 2s;
+}
+
+.tap-icon:hover ~ .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tap-icon:hover {
+  animation: none;
 }
 
 .q-container img {
