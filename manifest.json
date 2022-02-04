@@ -16,7 +16,5 @@
       "128": "/assets/POTD_logo_128.png"
     }
   },
-  "permissions": [
-    "activeTab"
-  ]
+  "permissions": ["activeTab"]
 }

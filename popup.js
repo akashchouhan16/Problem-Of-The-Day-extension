@@ -57,8 +57,13 @@ function startTime() {
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
 
-  let strTimeLeft =
-    24 - hours + "hr " + (60 - minutes) + "m " + (60 - seconds) + "s left";
+  let timerhour = 24 - hours;
+  let timermin = 60 - minutes;
+  let timersec = 60 - seconds;
+
+  timersec = timersec < 10 ? "0" + timersec : timersec;
+
+  let strTimeLeft = timerhour + "hr " + timermin + "m " + timersec + "s left";
 
   let ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12;
@@ -73,22 +78,24 @@ function startTime() {
 }
 
 const updateUI = () => {
-  // Question description
   let question = ui_elements.problem_statement;
   let topic = ui_elements.topic;
 
-  if (question.length > 55) {
-    // Question description tooltip
-    let tooltip = document.getElementById("q-tooltip");
-    tooltip.classList.add("tooltip");
-    document.getElementById("question-tooltip").innerHTML =
-      question +
-      '<br/><br/><span id="question-topic"> Topic - ' +
-      topic +
-      "</span>";
+  // Question description tooltip
+  let tooltip = document.getElementById("q-tooltip");
 
+  tooltip.classList.add("tooltip");
+
+  let tooltiptext = question.length > 55 ? question + "<br/><br/>" : "";
+
+  document.getElementById("question-tooltip").innerHTML =
+    tooltiptext + '<span id="question-topic">Topic - ' + topic + "</span>";
+
+  // Question description
+  if (question.length > 55) {
     question = question.substring(0, 55) + "... ";
   }
+
   document.getElementById("question").innerHTML = question;
 
   // Question link
