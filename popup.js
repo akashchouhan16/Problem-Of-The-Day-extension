@@ -56,8 +56,8 @@ function startTime() {
   let minutes = date.getMinutes();
   let seconds = date.getSeconds();
 
-  let timerhour = 24 - hours;
-  let timermin = 60 - minutes;
+  let timerhour = 23 - hours;
+  let timermin = 59 - minutes;
   let timersec = 60 - seconds;
 
   timersec = timersec < 10 ? "0" + timersec : timersec;
