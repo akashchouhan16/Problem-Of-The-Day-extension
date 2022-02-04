@@ -56,8 +56,8 @@ body {
 }
 
 #question {
-  font-size: 0.84rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   word-wrap: break-word;
   padding: 0px 4px;
 }

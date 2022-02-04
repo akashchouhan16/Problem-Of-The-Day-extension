@@ -1,7 +1,7 @@
 //Preloader
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-let url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
+const url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
 let ui_elements = {
   problem_id: "",
   problem_statement: "",
@@ -16,12 +16,11 @@ window.addEventListener("load", async function () {
   let month = date.getMonth();
   let day = date.getDate();
   let datestring = String(day) + String(month + 1);
-
-  url += datestring;
+  console.log(datestring);
 
   // Connection to Backend:
   try {
-    const temp = await fetch(url);
+    const temp = await fetch(url + datestring);
     const data = await temp.json();
 
     ui_elements.problem_id = data.response.problem_id;
