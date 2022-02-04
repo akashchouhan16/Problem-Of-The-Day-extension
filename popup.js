@@ -68,19 +68,21 @@ function startTime() {
 const updateUI = () => {
   // Question description
   let question = ui_elements.problem_statement;
+  let topic = ui_elements.topic;
+
   if (question.length > 55) {
     // Question description tooltip
     let tooltip = document.getElementById("q-tooltip");
     tooltip.classList.add("tooltip");
-    document.getElementById("question-tooltip").innerHTML = question;
+    document.getElementById("question-tooltip").innerHTML =
+      question +
+      '<br/><br/><span id="question-topic"> Topic - ' +
+      topic +
+      "</span>";
 
     question = question.substring(0, 55) + "... ";
   }
   document.getElementById("question").innerHTML = question;
-
-  // Question topic
-  let topic = ui_elements.topic;
-  document.getElementById("topic").innerHTML = topic;
 
   // Question link
   let link = ui_elements.link;

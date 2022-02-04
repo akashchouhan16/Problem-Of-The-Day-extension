@@ -56,8 +56,8 @@ body {
 }
 
 #question {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 400;
   word-wrap: break-word;
   padding: 0px 4px;
 }
@@ -178,7 +178,7 @@ body {
   background-color: rgb(70, 70, 70);
   color: white;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 2%;
   position: absolute;
   z-index: 1;
@@ -189,9 +189,16 @@ body {
   opacity: 0;
   transition: opacity 0.3s;
   border: 1px solid black;
+  line-height: 6.5vh;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+#question-topic {
+  color: rgb(190, 190, 190);
+  font-weight: 600;
+  font-size: 0.85rem;
 }

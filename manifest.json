@@ -3,10 +3,8 @@
   "name": "POTD - Problem Of The Day",
   "description": "Solve a new DSA problem every day.",
   "version": "0.0.0.1",
-  "icons": { "16": "/images/", "48": "/images/", "128": "/images/" },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": { "16": "/images/", "48": "/images/", "128": "/images/" }
+    "default_popup": "popup.html"
   },
   "permissions": ["activeTab"]
 }
