@@ -58,7 +58,7 @@ function startTime() {
 
   let timerhour = 23 - hours;
   let timermin = 59 - minutes;
-  let timersec = 60 - seconds;
+  let timersec = 59 - seconds;
 
   timersec = timersec < 10 ? "0" + timersec : timersec;
 
@@ -84,6 +84,9 @@ const updateUI = () => {
   let tooltip = document.getElementById("q-tooltip");
 
   tooltip.classList.add("tooltip");
+
+  question =
+    question.length > 100 ? question.substring(0, 100) + "..." : question;
 
   let tooltiptext = question.length > 55 ? question + "<br/><br/>" : "";
 
