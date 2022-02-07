@@ -13,6 +13,11 @@ let ui_elements = {
   key: 0
 };
 
+const generateKey = ()=>{
+  let date = new Date();
+  return  (String(date.getDate()) + String(date.getMonth() + 1));
+}
+
 window.addEventListener("load", async function () {
   //Owl carousel
   $(document).ready(function () {
@@ -44,11 +49,7 @@ window.addEventListener("load", async function () {
   });
 
   startTime();
-
-  let date = new Date();
-  let month = date.getMonth();
-  let day = date.getDate();
-  let datestring = String(day) + String(month + 1);
+  let datestring = generateKey();
 
   // Connection to Backend:
   try {
@@ -72,6 +73,11 @@ window.addEventListener("load", async function () {
         ui_elements.url = data.response.link;
         ui_elements.problem_statement = data.response.problem;
 
+        // remove previous problem:
+        myStorage.removeItem('problem_id');
+        myStorage.removeItem('topic');
+        myStorage.removeItem('url');
+        myStorage.removeItem('problem_statement');
         //save to localStorage:
         myStorage.setItem('problem_id', ui_elements.problem_id);
         myStorage.setItem('topic', ui_elements.topic);
@@ -79,12 +85,16 @@ window.addEventListener("load", async function () {
         myStorage.setItem('problem_statement', ui_elements.problem_statement);
         myStorage.setItem('key', datestring);
     }
+// ==============================================================================
     // Update UI:
     updateUI();
     // Update Contest details:
-    await getContestDetails();
+    await getContestDetails();    
+    //Update Bookmarked Problems:
+    fetchBookmarks();
+// ==============================================================================
   } catch (e) {
-    console.log(e.message);
+    console.warn(e);
   }
 
   loadergif.classList.add("fade-out-fast");
@@ -135,8 +145,7 @@ function startTime() {
 }
 
 const updateUI = () => {
-  let question = ui_elements.problem_statement;
-  question += "sdasd sd dasdasdas sa";
+  question = ui_elements.problem_statement;
   let topic = ui_elements.topic;
 
   // Question description tooltip
@@ -159,7 +168,7 @@ const updateUI = () => {
   document.getElementById("question").innerHTML = question;
 
   // Question link
-  let link = ui_elements.link;
+  let link = ui_elements.url;
   document.getElementById("solve-btn").addEventListener("click", function () {
     window.open(link, "_blank");
   });
@@ -191,4 +200,46 @@ function updateContestList(data){
         li.appendChild(atag);
         container.appendChild(li);
     }
+}
+
+
+// Bookmark Feature:
+document.addEventListener('DOMContentLoaded', function() {
+    let bookmarkIcon = document.getElementById('bookmark');
+    let bookmarkList = document.getElementById('main-to-liked')
+    bookmarkIcon.addEventListener('click', generateBookmark);
+    bookmarkIcon.addEventListener('click', bookmarkList);
+});
+
+
+let question = document.getElementById('question');
+// console.log(question.innerText);
+
+function generateBookmark(){
+    myStorage.setItem("Bookmark" + generateKey(), question);
+    console.info(`Problem Of The Day Bookmarked.`);
+}
+
+let bookmarkContainer = document.getElementById('Bookmarks');
+function fetchBookmarks(){
+    let list = [];
+    for (let element in myStorage){
+     let result = element.includes("Bookmark");
+     if(result){
+        list.push(myStorage.getItem(element));
+      }
+    }
+    // for(let x in list)
+    //   console.log(list[x]);
+    
+    for(let x in list){
+      let li = document.createElement('li');
+      let atag = document.createElement('a');
+      atag.setAttribute('target', "_blank");
+      atag.textContent = list[x];
+      
+      li.append(atag);
+      bookmarkContainer.appendChild(li);
+    }
+    console.info('Bookmarks updated.');
 }
