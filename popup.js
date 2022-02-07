@@ -4,11 +4,13 @@ let loadergif = document.getElementById("loadgif");
 const problemsAPI_url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
 const contestAPI_url = "https://problemoftheday-server.herokuapp.com/contests/";
 
+let myStorage = window.localStorage;
 let ui_elements = {
   problem_id: "",
   problem_statement: "",
   topic: "",
-  link: "",
+  url: "",
+  key: 0
 };
 
 window.addEventListener("load", async function () {
@@ -50,14 +52,33 @@ window.addEventListener("load", async function () {
 
   // Connection to Backend:
   try {
-    const temp = await fetch(problemsAPI_url + datestring);
-    const data = await temp.json();
 
-    ui_elements.problem_id = data.response.problem_id;
-    ui_elements.topic = data.response.topic;
-    ui_elements.link = data.response.link;
-    ui_elements.problem_statement = data.response.problem;
+    // Prevent Network request to the server by caching the POTD onto browser storage.
+    let key = myStorage.getItem('key');
+    if(key !== null && key === datestring){
+      console.info('Extension Cache Hit.');
+      ui_elements.problem_id = myStorage.getItem('problem_id');
+      ui_elements.topic = myStorage.getItem('topic');
+      ui_elements.url = myStorage.getItem('url');
+      ui_elements.problem_statement = myStorage.getItem('problem_statement');
+    }
+    else{
+        console.info('Network Request made to POTD Servers. Data Cached.');
+        const temp = await fetch(problemsAPI_url + datestring);
+        const data = await temp.json();
+            
+        ui_elements.problem_id = data.response.problem_id;
+        ui_elements.topic = data.response.topic;
+        ui_elements.url = data.response.link;
+        ui_elements.problem_statement = data.response.problem;
 
+        //save to localStorage:
+        myStorage.setItem('problem_id', ui_elements.problem_id);
+        myStorage.setItem('topic', ui_elements.topic);
+        myStorage.setItem('url', ui_elements.url,);
+        myStorage.setItem('problem_statement', ui_elements.problem_statement);
+        myStorage.setItem('key', datestring);
+    }
     // Update UI:
     updateUI();
     // Update Contest details:
@@ -123,8 +144,7 @@ const updateUI = () => {
 
   tooltip.classList.add("tooltip");
 
-  question =
-    question.length > 100 ? question.substring(0, 100) + "..." : question;
+  question = question.length > 100 ? question.substring(0, 100) + "..." : question;
 
   let tooltiptext = question.length > 50 ? question + "<br/><br/>" : "";
 
@@ -150,7 +170,7 @@ async function getContestDetails (){
     try{
         const response = await fetch(contestAPI_url +'codeforces')
         const data = await response.json();
-        console.log(data);
+        
         // Update Contests UI
         updateContestList(data.contests);
     }catch(error){
