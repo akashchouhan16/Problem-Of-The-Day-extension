@@ -106,6 +106,20 @@ window.addEventListener("load", async function () {
     console.warn(e);
   }
 
+  document
+    .getElementById("tooltip-button")
+    .addEventListener("mouseover", function checkHover() {
+      document.getElementById("question-tooltip").classList.add("show-tooltip");
+    });
+
+  document
+    .getElementById("tooltip-button")
+    .addEventListener("mouseout", function checkHover() {
+      document
+        .getElementById("question-tooltip")
+        .classList.remove("show-tooltip");
+    });
+
   loadergif.classList.add("fade-out-fast");
   loader.classList.add("fade-out");
 });

@@ -73,10 +73,10 @@ a {
   display: inline-block;
   margin: auto 0;
   margin-top: 7.5px;
-  max-width: 75vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 60vw;
 }
 
 #date {
@@ -107,6 +107,19 @@ a {
   margin-top: 4vh;
   box-shadow: inset 0 0 6px 2px rgb(0, 0, 0);
   word-wrap: break-word;
+  text-align: center;
+}
+
+.q-text-container {
+  width: 90vw;
+}
+
+.icon-box {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .bt-container {
@@ -275,7 +288,7 @@ a {
   border-radius: 10px;
   padding: 2%;
   position: absolute;
-  z-index: 1;
+  z-index: 200;
   width: 250px;
   top: 100%;
   left: 50%;
@@ -305,10 +318,9 @@ a {
   cursor: pointer;
   animation: heartbeat 2s infinite;
   animation-delay: 1s;
-  float: right;
 }
 
-.tap-icon:hover ~ .tooltiptext {
+.show-tooltip {
   visibility: visible;
   opacity: 1;
 }
@@ -319,7 +331,6 @@ a {
 
 .like-icon {
   position: relative;
-  float: right;
   top: 5.5px;
   height: 18px;
   width: 19px !important;
@@ -355,4 +366,12 @@ a {
 .carousel-cell {
   width: 100%;
   cursor: default;
+}
+
+#Bookmarks {
+  margin: 0;
+}
+
+#Contests {
+  margin: 0;
 }
