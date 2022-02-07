@@ -250,6 +250,12 @@ function generateBookmark() {
   console.info(`Problem Of The Day Bookmarked.`);
 }
 
+let bookmarkHeart = document.getElementById("bookmark-heart");
+
+bookmarkHeart.addEventListener("click", () => {
+  location.reload();
+});
+
 let bookmarkContainer = document.getElementById("Bookmarks");
 function fetchBookmarks() {
   let list = [];
@@ -257,6 +263,11 @@ function fetchBookmarks() {
     let result = element.includes("Bookmark");
     if (result) {
       list.push(myStorage.getItem(element));
+      if (element.includes(generateKey())) {
+        bookmarkHeart.src = "/assets/heart-icon-red.png";
+      } else {
+        bookmarkHeart.src = "/assets/heart-icon-grey.png";
+      }
     }
   }
   // for(let x in list)
