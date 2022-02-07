@@ -1,7 +1,9 @@
 //Preloader
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-const url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
+const problemsAPI_url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
+const contestAPI_url = "https://problemoftheday-server.herokuapp.com/contests/";
+
 let ui_elements = {
   problem_id: "",
   problem_statement: "",
@@ -48,7 +50,7 @@ window.addEventListener("load", async function () {
 
   // Connection to Backend:
   try {
-    const temp = await fetch(url + datestring);
+    const temp = await fetch(problemsAPI_url + datestring);
     const data = await temp.json();
 
     ui_elements.problem_id = data.response.problem_id;
@@ -58,6 +60,8 @@ window.addEventListener("load", async function () {
 
     // Update UI:
     updateUI();
+    // Update Contest details:
+    await getContestDetails();
   } catch (e) {
     console.log(e.message);
   }
@@ -140,3 +144,31 @@ const updateUI = () => {
     window.open(link, "_blank");
   });
 };
+
+// Fetch module
+async function getContestDetails (){
+    try{
+        const response = await fetch(contestAPI_url +'codeforces')
+        const data = await response.json();
+        console.log(data);
+        // Update Contests UI
+        updateContestList(data.contests);
+    }catch(error){
+        console.warn(error.message) 
+    }
+}
+
+
+let container = document.getElementById("Contests");
+function updateContestList(data){
+    for(let i in data){
+        let li = document.createElement('li');
+        let atag = document.createElement('a')
+        atag.setAttribute('href', data[i].url);
+        atag.setAttribute('target', "_blank");
+        atag.textContent = data[i].name;
+
+        li.appendChild(atag);
+        container.appendChild(li);
+    }
+}

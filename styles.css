@@ -55,6 +55,16 @@ body {
   user-select: none;
 }
 
+li{
+  list-style-type: none;
+}
+
+a{
+  text-decoration: none;
+  font-weight: 600;
+  color: rgb(200, 200, 200);
+}
+
 #question {
   font-size: 0.8rem;
   font-weight: 400;
