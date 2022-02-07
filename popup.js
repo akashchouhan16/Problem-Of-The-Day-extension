@@ -198,10 +198,17 @@ const updateUI = () => {
   });
 };
 
+//Contest Platform Selector
+document
+  .getElementById("contests-list")
+  .addEventListener("change", function () {
+    getContestDetails(this.value);
+  });
+
 // Fetch module
-async function getContestDetails() {
+async function getContestDetails(platform) {
   try {
-    const response = await fetch(contestAPI_url + "codeforces");
+    const response = await fetch(contestAPI_url + platform);
     const data = await response.json();
 
     // Update Contests UI
@@ -212,7 +219,9 @@ async function getContestDetails() {
 }
 
 let container = document.getElementById("Contests");
+
 function updateContestList(data) {
+  container.innerHTML = "";
   for (let i in data) {
     let li = document.createElement("li");
     let atag = document.createElement("a");

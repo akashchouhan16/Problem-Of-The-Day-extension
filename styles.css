@@ -375,3 +375,37 @@ a {
 #Contests {
   margin: 0;
 }
+
+li {
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  cursor: pointer;
+}
+
+li:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dropdown-container {
+  float: right;
+  position: absolute;
+  top: 5px;
+  right: 25px;
+}
+
+.dropdown-container select {
+  background-color: rgb(68, 68, 68);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.7rem;
+}
