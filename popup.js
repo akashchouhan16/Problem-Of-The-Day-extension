@@ -10,6 +10,35 @@ let ui_elements = {
 };
 
 window.addEventListener("load", async function () {
+  //Owl carousel
+  $(document).ready(function () {
+    $(".owl-carousel").owlCarousel({
+      items: 1,
+      center: true,
+      startPosition: 1,
+      dots: false,
+      nav: false,
+    });
+
+    let owlh = $(".owl-carousel");
+
+    $("#main-to-liked").click(function () {
+      owlh.trigger("next.owl.carousel");
+    });
+
+    $("#main-to-contests").click(function () {
+      owlh.trigger("prev.owl.carousel");
+    });
+
+    $("#liked-to-main").click(function () {
+      owlh.trigger("prev.owl.carousel");
+    });
+
+    $("#contests-to-main").click(function () {
+      owlh.trigger("next.owl.carousel");
+    });
+  });
+
   startTime();
 
   let date = new Date();
@@ -62,6 +91,10 @@ function startTime() {
 
   timersec = timersec < 10 ? "0" + timersec : timersec;
 
+  //Timer color control
+  if (timerhour == 0) $("#timer").css("color", "#ff4570");
+  else $("#timer").css("color", "rgb(190, 190, 190)");
+
   let strTimeLeft = timerhour + "hr " + timermin + "m " + timersec + "s left";
 
   let ampm = hours >= 12 ? "PM" : "AM";
@@ -78,6 +111,7 @@ function startTime() {
 
 const updateUI = () => {
   let question = ui_elements.problem_statement;
+  question += "sdasd sd dasdasdas sa";
   let topic = ui_elements.topic;
 
   // Question description tooltip
@@ -88,14 +122,14 @@ const updateUI = () => {
   question =
     question.length > 100 ? question.substring(0, 100) + "..." : question;
 
-  let tooltiptext = question.length > 55 ? question + "<br/><br/>" : "";
+  let tooltiptext = question.length > 50 ? question + "<br/><br/>" : "";
 
   document.getElementById("question-tooltip").innerHTML =
     tooltiptext + '<span id="question-topic">Topic - ' + topic + "</span>";
 
   // Question description
-  if (question.length > 55) {
-    question = question.substring(0, 55) + "... ";
+  if (question.length > 50) {
+    question = question.substring(0, 50) + "... ";
   }
 
   document.getElementById("question").innerHTML = question;
