@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "POTD - Problem Of The Day",
   "description": "Solve a new DSA problem every day.",
-  "version": "1.0.0.1",
+  "version": "1.0.1.0",
   "icons": {
     "16": "/assets/POTD_logo_16.png",
     "48": "/assets/POTD_logo_48.png",
@@ -16,13 +16,6 @@
       "128": "/assets/POTD_logo_128.png"
     }
   },
-  "content_scripts": [
-    {
-      "js": [
-        "./popup.js"
-      ]
-    }
-  ],
   "permissions": [
     "activeTab",
     "storage"
