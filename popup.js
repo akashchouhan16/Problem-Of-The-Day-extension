@@ -1,7 +1,8 @@
 //Preloader
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-const problemsAPI_url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
+const problemsAPI_url =
+  "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
 const contestAPI_url = "https://problemoftheday-server.herokuapp.com/contests/";
 
 let myStorage = window.localStorage;
@@ -10,89 +11,97 @@ let ui_elements = {
   problem_statement: "",
   topic: "",
   url: "",
-  key: 0
+  key: 0,
 };
 
-const generateKey = ()=>{
+const generateKey = () => {
   let date = new Date();
-  return  (String(date.getDate()) + String(date.getMonth() + 1));
-}
+  return String(date.getDate()) + String(date.getMonth() + 1);
+};
 
 window.addEventListener("load", async function () {
-  //Owl carousel
-  $(document).ready(function () {
-    $(".owl-carousel").owlCarousel({
-      items: 1,
-      center: true,
-      startPosition: 1,
-      dots: false,
-      nav: false,
-    });
-
-    let owlh = $(".owl-carousel");
-
-    $("#main-to-liked").click(function () {
-      owlh.trigger("next.owl.carousel");
-    });
-
-    $("#main-to-contests").click(function () {
-      owlh.trigger("prev.owl.carousel");
-    });
-
-    $("#liked-to-main").click(function () {
-      owlh.trigger("prev.owl.carousel");
-    });
-
-    $("#contests-to-main").click(function () {
-      owlh.trigger("next.owl.carousel");
-    });
+  // Flickity Carousel
+  let elem = document.querySelector(".main-carousel");
+  let flkty = new Flickity(elem, {
+    autoPlay: false,
+    cellAlign: "center",
+    cellSelector: undefined,
+    draggable: ">1",
+    freeScroll: false,
+    friction: 0.214,
+    initialIndex: 1,
+    prevNextButtons: false,
+    pageDots: false,
+    resize: false,
   });
+
+  document
+    .getElementById("main-to-liked")
+    .addEventListener("click", function () {
+      flkty.next();
+    });
+
+  document
+    .getElementById("main-to-contests")
+    .addEventListener("click", function () {
+      flkty.previous();
+    });
+
+  document
+    .getElementById("liked-to-main")
+    .addEventListener("click", function () {
+      flkty.previous();
+    });
+
+  document
+    .getElementById("contests-to-main")
+    .addEventListener("click", function () {
+      flkty.next();
+    });
 
   startTime();
   let datestring = generateKey();
 
   // Connection to Backend:
   try {
-
     // Prevent Network request to the server by caching the POTD onto browser storage.
-    let key = myStorage.getItem('key');
-    if(key !== null && key === datestring){
-      console.info('Extension Cache Hit.');
-      ui_elements.problem_id = myStorage.getItem('problem_id');
-      ui_elements.topic = myStorage.getItem('topic');
-      ui_elements.url = myStorage.getItem('url');
-      ui_elements.problem_statement = myStorage.getItem('problem_statement');
-    }
-    else{
-        console.info('Network Request made to POTD Servers. Data Cached.');
-        const temp = await fetch(problemsAPI_url + datestring);
-        const data = await temp.json();
-            
-        ui_elements.problem_id = data.response.problem_id;
-        ui_elements.topic = data.response.topic;
-        ui_elements.url = data.response.link;
-        ui_elements.problem_statement = data.response.problem;
+    let key = myStorage.getItem("key");
+    if (key !== null && key === datestring) {
+      console.info("Extension Cache Hit.");
+      ui_elements.problem_id = myStorage.getItem("problem_id");
+      ui_elements.topic = myStorage.getItem("topic");
+      ui_elements.url = myStorage.getItem("url");
+      ui_elements.problem_statement = myStorage.getItem("problem_statement");
+    } else {
+      console.info("Network Request made to POTD Servers. Data Cached.");
+      const temp = await fetch(problemsAPI_url + datestring);
+      const data = await temp.json();
 
-        // remove previous problem:
-        myStorage.removeItem('problem_id');
-        myStorage.removeItem('topic');
-        myStorage.removeItem('url');
-        myStorage.removeItem('problem_statement');
-        //save to localStorage:
-        myStorage.setItem('problem_id', ui_elements.problem_id);
-        myStorage.setItem('topic', ui_elements.topic);
-        myStorage.setItem('url', ui_elements.url,);
-        myStorage.setItem('problem_statement', ui_elements.problem_statement);
-        myStorage.setItem('key', datestring);
+      ui_elements.problem_id = data.response.problem_id;
+      ui_elements.topic = data.response.topic;
+      ui_elements.url = data.response.link;
+      ui_elements.problem_statement = data.response.problem;
+
+      // remove previous problem:
+      myStorage.removeItem("problem_id");
+      myStorage.removeItem("topic");
+      myStorage.removeItem("url");
+      myStorage.removeItem("problem_statement");
+      //save to localStorage:
+      myStorage.setItem("problem_id", ui_elements.problem_id);
+      myStorage.setItem("topic", ui_elements.topic);
+      myStorage.setItem("url", ui_elements.url);
+      myStorage.setItem("problem_statement", ui_elements.problem_statement);
+      myStorage.setItem("key", datestring);
     }
-// ==============================================================================
+    // ==============================================================================
     // Update UI:
     updateUI();
     // Update Contest details:
-    await getContestDetails();    
+    await getContestDetails();
     //Update Bookmarked Problems:
     fetchBookmarks();
-// ==============================================================================
+    // ==============================================================================
   } catch (e) {
     console.warn(e);
   }
@@ -127,8 +136,8 @@ function startTime() {
   timersec = timersec < 10 ? "0" + timersec : timersec;
 
   //Timer color control
-  if (timerhour == 0) $("#timer").css("color", "#ff4570");
-  else $("#timer").css("color", "rgb(190, 190, 190)");
+  if (timerhour == 0) document.getElementById("timer").style.color = "#ff5570";
+  else document.getElementById("timer").style.color = "rgb(190, 190, 190)";
 
   let strTimeLeft = timerhour + "hr " + timermin + "m " + timersec + "s left";
 
@@ -153,7 +162,8 @@ const updateUI = () => {
 
   tooltip.classList.add("tooltip");
 
-  question = question.length > 100 ? question.substring(0, 100) + "..." : question;
+  question =
+    question.length > 100 ? question.substring(0, 100) + "..." : question;
 
   let tooltiptext = question.length > 50 ? question + "<br/><br/>" : "";
 
@@ -175,71 +185,68 @@ const updateUI = () => {
 };
 
 // Fetch module
-async function getContestDetails (){
-    try{
-        const response = await fetch(contestAPI_url +'codeforces')
-        const data = await response.json();
-        
-        // Update Contests UI
-        updateContestList(data.contests);
-    }catch(error){
-        console.warn(error.message) 
-    }
-}
+async function getContestDetails() {
+  try {
+    const response = await fetch(contestAPI_url + "codeforces");
+    const data = await response.json();
 
+    // Update Contests UI
+    updateContestList(data.contests);
+  } catch (error) {
+    console.warn(error.message);
+  }
+}
 
 let container = document.getElementById("Contests");
-function updateContestList(data){
-    for(let i in data){
-        let li = document.createElement('li');
-        let atag = document.createElement('a')
-        atag.setAttribute('href', data[i].url);
-        atag.setAttribute('target', "_blank");
-        atag.textContent = data[i].name;
+function updateContestList(data) {
+  for (let i in data) {
+    let li = document.createElement("li");
+    let atag = document.createElement("a");
+    atag.setAttribute("href", data[i].url);
+    atag.setAttribute("target", "_blank");
+    atag.textContent = data[i].name;
 
-        li.appendChild(atag);
-        container.appendChild(li);
-    }
+    li.appendChild(atag);
+    container.appendChild(li);
+  }
 }
-
 
 // Bookmark Feature:
-document.addEventListener('DOMContentLoaded', function() {
-    let bookmarkIcon = document.getElementById('bookmark');
-    let bookmarkList = document.getElementById('main-to-liked')
-    bookmarkIcon.addEventListener('click', generateBookmark);
-    bookmarkIcon.addEventListener('click', bookmarkList);
+document.addEventListener("DOMContentLoaded", function () {
+  let bookmarkIcon = document.getElementById("bookmark");
+  let bookmarkList = document.getElementById("main-to-liked");
+  bookmarkIcon.addEventListener("click", generateBookmark);
+  bookmarkIcon.addEventListener("click", bookmarkList);
 });
 
-
-let question = document.getElementById('question');
+let question = document.getElementById("question");
 // console.log(question.innerText);
 
-function generateBookmark(){
-    myStorage.setItem("Bookmark" + generateKey(), question);
-    console.info(`Problem Of The Day Bookmarked.`);
+function generateBookmark() {
+  myStorage.setItem("Bookmark" + generateKey(), question);
+  console.info(`Problem Of The Day Bookmarked.`);
 }
 
-let bookmarkContainer = document.getElementById('Bookmarks');
-function fetchBookmarks(){
-    let list = [];
-    for (let element in myStorage){
-     let result = element.includes("Bookmark");
-     if(result){
-        list.push(myStorage.getItem(element));
-      }
+let bookmarkContainer = document.getElementById("Bookmarks");
+function fetchBookmarks() {
+  let list = [];
+  for (let element in myStorage) {
+    let result = element.includes("Bookmark");
+    if (result) {
+      list.push(myStorage.getItem(element));
     }
-    // for(let x in list)
-    //   console.log(list[x]);
-    
-    for(let x in list){
-      let li = document.createElement('li');
-      let atag = document.createElement('a');
-      atag.setAttribute('target', "_blank");
-      atag.textContent = list[x];
-      
-      li.append(atag);
-      bookmarkContainer.appendChild(li);
-    }
-    console.info('Bookmarks updated.');
+  }
+  // for(let x in list)
+  //   console.log(list[x]);
+
+  for (let x in list) {
+    let li = document.createElement("li");
+    let atag = document.createElement("a");
+    atag.setAttribute("target", "_blank");
+    atag.textContent = list[x];
+
+    li.append(atag);
+    bookmarkContainer.appendChild(li);
+  }
+  console.info("Bookmarks updated.");
 }

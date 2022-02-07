@@ -55,11 +55,11 @@ body {
   user-select: none;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-a{
+a {
   text-decoration: none;
   font-weight: 600;
   color: rgb(200, 200, 200);
@@ -193,13 +193,13 @@ a{
 .secondary-text-container::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  background-color: #8d8d8d;
+  background-color: #555;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .secondary-text-container::-webkit-scrollbar {
   width: 6px;
-  background-color: #8d8d8d;
+  background-color: #555;
   border-radius: 10px;
 }
 
@@ -207,7 +207,7 @@ a{
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #555;
+  background-color: #8d8d8d;
 }
 
 .gh-container {
@@ -346,4 +346,13 @@ a{
   100% {
     transform: scale(1);
   }
+}
+
+.carousel {
+  width: 450px;
+}
+
+.carousel-cell {
+  width: 100%;
+  cursor: default;
 }
