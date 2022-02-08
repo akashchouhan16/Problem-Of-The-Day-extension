@@ -404,6 +404,7 @@ li a {
 
 li a:hover {
   text-decoration: underline;
+  filter: brightness(150%);
 }
 
 @keyframes fadeInAnimation {
