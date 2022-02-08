@@ -55,8 +55,18 @@ body {
   user-select: none;
 }
 
+ul {
+  padding: 0;
+}
+
+#Bookmarks li {
+  padding-left: 25px !important;
+}
+
 li {
   list-style-type: none;
+  width: auto;
+  margin: 0 10px;
 }
 
 a {
@@ -201,6 +211,7 @@ a {
 .secondary-text-container {
   height: 37.4vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .secondary-text-container::-webkit-scrollbar-track {
@@ -380,10 +391,13 @@ li {
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+li a {
   cursor: pointer;
 }
 
-li:hover {
+li a:hover {
   text-decoration: underline;
 }
 
@@ -408,4 +422,31 @@ li:hover {
   color: white;
   font-family: "Poppins", sans-serif;
   font-size: 0.7rem;
+}
+
+.bookmark-del-btn {
+  border: 0;
+  background: transparent;
+}
+
+.bookmark-del-btn img {
+  height: 15px;
+  width: 15px;
+  filter: brightness(250%);
+  position: relative;
+  margin-left: 3px;
+  top: 2px;
+  cursor: pointer;
+}
+
+.bookmark-del-btn:hover img {
+  filter: brightness(450%);
+}
+
+.zoom-2 {
+  transition: transform 0.3s;
+}
+
+.zoom-2:hover {
+  transform: scale(1.08);
 }

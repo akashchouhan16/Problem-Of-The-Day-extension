@@ -179,14 +179,14 @@ const updateUI = () => {
   question =
     question.length > 100 ? question.substring(0, 100) + "..." : question;
 
-  let tooltiptext = question.length > 50 ? question + "<br/><br/>" : "";
+  let tooltiptext = question.length > 45 ? question + "<br/><br/>" : "";
 
   document.getElementById("question-tooltip").innerHTML =
     tooltiptext + '<span id="question-topic">Topic - ' + topic + "</span>";
 
   // Question description
-  if (question.length > 50) {
-    question = question.substring(0, 50) + "... ";
+  if (question.length > 45) {
+    question = question.substring(0, 45) + "... ";
   }
 
   document.getElementById("question").innerHTML = question;
@@ -229,6 +229,7 @@ function updateContestList(data) {
     atag.setAttribute("target", "_blank");
     atag.textContent = data[i].name;
 
+    li.setAttribute("class", "zoom-2");
     li.appendChild(atag);
     container.appendChild(li);
   }
@@ -236,51 +237,94 @@ function updateContestList(data) {
 
 // Bookmark Feature:
 document.addEventListener("DOMContentLoaded", function () {
-  let bookmarkIcon = document.getElementById("bookmark");
-  let bookmarkList = document.getElementById("main-to-liked");
+  let bookmarkIcon = document.getElementById("bookmark-heart");
   bookmarkIcon.addEventListener("click", generateBookmark);
-  bookmarkIcon.addEventListener("click", bookmarkList);
 });
 
 let question = document.getElementById("question");
-// console.log(question.innerText);
 
 function generateBookmark() {
-  myStorage.setItem("Bookmark" + generateKey(), question);
+  let index = list.indexOf(ui_elements.problem_statement);
+
+  if (index != -1) removeBookmark(index);
+  else myStorage.setItem("Bookmark" + generateKey(), question);
+
+  fetchBookmarks();
   console.info(`Problem Of The Day Bookmarked.`);
 }
 
 let bookmarkHeart = document.getElementById("bookmark-heart");
 
-bookmarkHeart.addEventListener("click", () => {
-  location.reload();
-});
-
 let bookmarkContainer = document.getElementById("Bookmarks");
+let list = [];
+
 function fetchBookmarks() {
-  let list = [];
+  list = [];
   for (let element in myStorage) {
     let result = element.includes("Bookmark");
     if (result) {
       list.push(myStorage.getItem(element));
-      if (element.includes(generateKey())) {
-        bookmarkHeart.src = "/assets/heart-icon-red.png";
-      } else {
-        bookmarkHeart.src = "/assets/heart-icon-grey.png";
-      }
     }
   }
-  // for(let x in list)
-  //   console.log(list[x]);
+
+  setHeartColor();
+
+  bookmarkContainer.innerHTML = "";
 
   for (let x in list) {
     let li = document.createElement("li");
     let atag = document.createElement("a");
+    let img = document.createElement("img");
+    let btn = document.createElement("button");
     atag.setAttribute("target", "_blank");
     atag.textContent = list[x];
 
+    btn.setAttribute("value", x);
+    btn.setAttribute("class", "bookmark-del-btn");
+
+    img.setAttribute("src", "/assets/delete-icon.png");
+
+    btn.append(img);
+    li.setAttribute("class", "zoom-2");
     li.append(atag);
+    li.append(btn);
     bookmarkContainer.appendChild(li);
   }
+
+  let btns = document.getElementsByClassName("bookmark-del-btn");
+
+  for (i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      removeBookmark(this.value, list);
+    });
+  }
   console.info("Bookmarks updated.");
+}
+
+async function removeBookmark(value) {
+  for (let element in myStorage) {
+    let result = element.includes("Bookmark");
+    if (result) {
+      let temp = myStorage.getItem(element);
+      if (temp == list[value]) {
+        myStorage.removeItem(element);
+        fetchBookmarks();
+        setHeartColor();
+        break;
+      }
+    }
+  }
+}
+
+function setHeartColor() {
+  bookmarkHeart.src = "/assets/heart-icon-grey.png";
+
+  for (let element in myStorage) {
+    let result = element.includes("Bookmark");
+    if (result) {
+      if (element.includes(generateKey())) {
+        bookmarkHeart.src = "/assets/heart-icon-red.png";
+      }
+    }
+  }
 }
