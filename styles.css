@@ -338,6 +338,7 @@ a {
 
 .tap-icon:hover {
   animation: none;
+  filter: brightness(150%);
 }
 
 .like-icon {
@@ -347,6 +348,10 @@ a {
   width: 19px !important;
   cursor: pointer;
   margin-right: 8px;
+}
+
+.like-icon:hover {
+  filter: brightness(150%);
 }
 
 @keyframes heartbeat {

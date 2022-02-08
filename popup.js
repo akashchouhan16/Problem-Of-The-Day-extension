@@ -295,7 +295,7 @@ function fetchBookmarks() {
 
   for (i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", function () {
-      removeBookmark(this.value, list);
+      removeBookmark(this.value);
     });
   }
   console.info("Bookmarks updated.");
