@@ -11,12 +11,29 @@ A Google Chrome Browser extension to provide a daily practice problem on Data St
 > Beta Release: **[Download and add to Chrome](https://github.com/Hack-Repository/POTD-UI/blob/main/README.md#Beta-Installation "Download from Github")**
 
 ## About 
-* For individuals preparing for forthcoming software engineering interviews, the extension gives a new interview coding exercise every day.
-* The problems are from a curated selection of important DSA interview questions that were hand-picked from existing lists also including **Striver's SDE Sheet**, **450 DSA Sheet**, and many more.
-* The extension is presently available as a beta release and is not yet available on the Chrome Store.
+The POTD service caters to bring consistency into the young budding
+computer science students and enthusiasts towards DSA coding
+challenges. The idea here is to provide an easy to plug chrome browser
+extension to the users. Users are exposed a daily practice problem, which are from a pool
+750+ problems, curated by software engineers from Google & Directi.
 
-### Preview
-![POTD Extension](./assets/POTD_ExtensionUI.gif)
+* The Curated selection of important coding interview questions were hand-picked from existing lists that includes but are not limited to Striver's SDE Sheet, 450 DSA Sheet, and many more.
+* The extension is presently available as a beta release and is not yet available on the Chrome Store.
+> Updates: v1.0.1
+* **ContestsAPI**: Get Access to all upcoming global contests on platforms including **KickStart**, **Codeforces**, **AtCoder**, **Codechef**, **LeetCode** and more.
+* **Bookmark Problems**: Add problems as a bookmark to revisit the challenges later.
+* **Faster Load Time**: Optimised load times with client-side caching and storage. 
+
+## Application Preview
+
+![POTD Extension](./assets/ui_potd_1.0.1.gif)
+
+### **Get Upcoming Contest Details**
+![POTD ContestsAPI](./assets/ui_contestsapi_1.0.1.gif)
+
+### **Save Problem Of The Day as Bookmark**
+![POTD Bookmark](./assets/ui_bokkmark_1.0.1.gif)
+
 ---
 ## Beta Installation
 ### System Requirement
@@ -31,24 +48,23 @@ A Google Chrome Browser extension to provide a daily practice problem on Data St
   ```
   chrome://extensions/
   ```
-* Enable **Developer Mode** > Click on **Load unpacked** > locate your cloned files.
+* Enable **Developer Mode** > Click on **Load unpacked** > **Locate** your cloned POTD folder and add to chrome.
   * > ![Setup Developer Mode in Chrome](./assets/Setup_1.gif)
 * Extension is now ready to use!   
 
 ---
 ## Application Details
 [![forthebadge](https://forthebadge.com/images/badges/cc-0.svg)](https://github.com/Hack-Repository/POTD-GoogleChromeExtension) 
-[![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://github.com/Hack-Repository/POTD-GoogleChromeExtension)
+
 
 ### Version
-**[1.0.0 beta](https://github.com/Hack-Repository/POTD-GoogleChromeExtension "POTD CLient Version")**
+**[1.0.1 beta](https://github.com/Hack-Repository/POTD-GoogleChromeExtension "POTD CLient Version")**
 
-### Maintainer
-**[Akash Chouhan](https://github.com/akashchouhan16 "akashchouhan16")**
-
+### Maintainers
+**[Akash Chouhan](https://github.com/akashchouhan16 "akashchouhan16")**,
 **[Anurag Pratik](https://github.com/anurag-pratik "anurag-pratik")**
 
 ### License
 **[MIT](https://github.com/Hack-Repository/POTD-GoogleChromeExtension/blob/main/LICENSE "License")**
 
-All rights reserved. Copyright (c) **Akash Chouhan** & **Anurag Pratik**.
+All rights reserved. Copyright (c) **@POTD/Akash Chouhan** & **@POTD/Anurag Pratik**.
