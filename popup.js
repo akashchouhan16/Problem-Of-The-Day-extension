@@ -1,17 +1,12 @@
 //Preloader
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-const problemsAPI_url =
-  "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
+const problemsAPI_url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
 const contestAPI_url = "https://problemoftheday-server.herokuapp.com/contests/";
 
-let myStorage = window.localStorage;
+let POTDStorage = window.localStorage;
 let ui_elements = {
-  problem_id: "",
-  problem_statement: "",
-  topic: "",
-  url: "",
-  key: 0,
+  problem_id: "", problem_statement: "", topic: "", url: "", key: 0,
 };
 
 const generateKey = () => {
@@ -19,8 +14,7 @@ const generateKey = () => {
   return String(date.getDate()) + String(date.getMonth() + 1);
 };
 
-window.addEventListener("load", async function () {
-  // Flickity Carousel
+window.addEventListener("load", async ()=> {
   let elem = document.querySelector(".main-carousel");
   let flkty = new Flickity(elem, {
     autoPlay: false,
@@ -37,41 +31,43 @@ window.addEventListener("load", async function () {
 
   document
     .getElementById("main-to-liked")
-    .addEventListener("click", function () {
+    .addEventListener("click", ()=>{
       flkty.next();
     });
 
   document
     .getElementById("main-to-contests")
-    .addEventListener("click", function () {
+    .addEventListener("click", ()=>{
       flkty.previous();
     });
 
   document
     .getElementById("liked-to-main")
-    .addEventListener("click", function () {
+    .addEventListener("click", ()=>{
       flkty.previous();
     });
 
   document
     .getElementById("contests-to-main")
-    .addEventListener("click", function () {
+    .addEventListener("click", ()=>{
       flkty.next();
     });
 
   startTime();
   let datestring = generateKey();
 
-  // Connection to Backend:
+  // ====================== Connection to Backend ======================
   try {
-    // Prevent Network request to the server by caching the POTD onto browser storage.
-    let key = myStorage.getItem("key");
+    // Prevent Network request to the server if POTD is cached.
+    let key = POTDStorage.getItem("key");
     if (key !== null && key === datestring) {
+
       console.info("Extension Cache Hit.");
-      ui_elements.problem_id = myStorage.getItem("problem_id");
-      ui_elements.topic = myStorage.getItem("topic");
-      ui_elements.url = myStorage.getItem("url");
-      ui_elements.problem_statement = myStorage.getItem("problem_statement");
+      ui_elements.problem_id = POTDStorage.getItem("problem_id");
+      ui_elements.topic = POTDStorage.getItem("topic");
+      ui_elements.url = POTDStorage.getItem("url");
+      ui_elements.problem_statement = POTDStorage.getItem("problem_statement");
+
     } else {
       console.info("Network Request made to POTD Servers. Data Cached.");
       const temp = await fetch(problemsAPI_url + datestring);
@@ -83,16 +79,16 @@ window.addEventListener("load", async function () {
       ui_elements.problem_statement = data.response.problem;
 
       // remove previous problem:
-      myStorage.removeItem("problem_id");
-      myStorage.removeItem("topic");
-      myStorage.removeItem("url");
-      myStorage.removeItem("problem_statement");
+      POTDStorage.removeItem("problem_id");
+      POTDStorage.removeItem("topic");
+      POTDStorage.removeItem("url");
+      POTDStorage.removeItem("problem_statement");
       //save to localStorage:
-      myStorage.setItem("problem_id", ui_elements.problem_id);
-      myStorage.setItem("topic", ui_elements.topic);
-      myStorage.setItem("url", ui_elements.url);
-      myStorage.setItem("problem_statement", ui_elements.problem_statement);
-      myStorage.setItem("key", datestring);
+      POTDStorage.setItem("problem_id", ui_elements.problem_id);
+      POTDStorage.setItem("topic", ui_elements.topic);
+      POTDStorage.setItem("url", ui_elements.url);
+      POTDStorage.setItem("problem_statement", ui_elements.problem_statement);
+      POTDStorage.setItem("key", datestring);
     }
     // ==============================================================================
     // Update UI:
@@ -108,13 +104,13 @@ window.addEventListener("load", async function () {
 
   document
     .getElementById("tooltip-button")
-    .addEventListener("mouseover", function checkHover() {
+    .addEventListener("mouseover", ()=>{
       document.getElementById("question-tooltip").classList.add("show-tooltip");
     });
 
   document
     .getElementById("tooltip-button")
-    .addEventListener("mouseout", function checkHover() {
+    .addEventListener("mouseout", ()=>{
       document
         .getElementById("question-tooltip")
         .classList.remove("show-tooltip");
@@ -124,9 +120,8 @@ window.addEventListener("load", async function () {
   loader.classList.add("fade-out");
 });
 
-//Date Display
-let dt = new Date();
 
+let dt = new Date();
 const options = {
   month: "short",
   day: "numeric",
@@ -136,7 +131,7 @@ dt = dt.toLocaleString("en-US", options);
 document.getElementById("date").innerHTML = dt;
 
 //Time Display
-function startTime() {
+const startTime = ()=> {
   const date = new Date();
 
   let hours = date.getHours();
@@ -167,13 +162,12 @@ function startTime() {
   setTimeout(startTime, 1000);
 }
 
+// ====================== POTD UI ====================== 
 const updateUI = () => {
   question = ui_elements.problem_statement;
   let topic = ui_elements.topic;
 
-  // Question description tooltip
   let tooltip = document.getElementById("q-tooltip");
-
   tooltip.classList.add("tooltip");
 
   question =
@@ -184,28 +178,28 @@ const updateUI = () => {
   document.getElementById("question-tooltip").innerHTML =
     tooltiptext + '<span id="question-topic">Topic - ' + topic + "</span>";
 
-  // Question description
-  if (question.length > 45) {
-    question = question.substring(0, 45) + "... ";
-  }
 
+  if (question.length > 45)
+    question = question.substring(0, 45) + "... ";
+  
   document.getElementById("question").innerHTML = question;
 
-  // Question link
   let link = ui_elements.url;
   document.getElementById("solve-btn").addEventListener("click", function () {
     window.open(link, "_blank");
   });
 };
 
-//Contest Platform Selector
+// ====================== ContestsAPI Feature ====================== 
+let container = document.getElementById("Contests");
+
 document
   .getElementById("contests-list")
   .addEventListener("change", function () {
     getContestDetails(this.value);
   });
 
-// Fetch module
+// Utility Methods:
 async function getContestDetails(platform) {
   try {
     const response = await fetch(contestAPI_url + platform);
@@ -214,11 +208,9 @@ async function getContestDetails(platform) {
     // Update Contests UI
     updateContestList(data.contests);
   } catch (error) {
-    console.warn(error.message);
+    console.error(error.message);
   }
 }
-
-let container = document.getElementById("Contests");
 
 function updateContestList(data) {
   container.innerHTML = "";
@@ -235,36 +227,60 @@ function updateContestList(data) {
   }
 }
 
-// Bookmark Feature:
+// ====================== Bookmark Feature ======================
+let bookmarkHeart = document.getElementById("bookmark-heart");
+let bookmarkContainer = document.getElementById("Bookmarks");
+let question = document.getElementById("question");
+let list = [];
+
 document.addEventListener("DOMContentLoaded", function () {
   let bookmarkIcon = document.getElementById("bookmark-heart");
   bookmarkIcon.addEventListener("click", generateBookmark);
 });
 
-let question = document.getElementById("question");
-
+//  Unitity Methods:
 function generateBookmark() {
   let index = list.indexOf(ui_elements.problem_statement);
 
-  if (index != -1) removeBookmark(index);
-  else myStorage.setItem("Bookmark" + generateKey(), question);
-
+  (index !== -1)?
+     removeBookmark(index): POTDStorage.setItem("Bookmark" + generateKey(), question);
   fetchBookmarks();
-  console.info(`Problem Of The Day Bookmarked.`);
 }
 
-let bookmarkHeart = document.getElementById("bookmark-heart");
+function setHeartColor() {
+  bookmarkHeart.src = "/assets/heart-icon-grey.png";
 
-let bookmarkContainer = document.getElementById("Bookmarks");
-let list = [];
+  for (let element in POTDStorage) {
+    let result = element.includes("Bookmark");
+    if (result) {
+      if (element.includes(generateKey())) {
+        bookmarkHeart.src = "/assets/heart-icon-red.png";
+      }
+    }
+  }
+}
+
+async function removeBookmark(value) {
+  for (let element in POTDStorage) {
+    let result = element.includes("Bookmark");
+    if (result) {
+      let storageItem = POTDStorage.getItem(element);
+      if (storageItem === list[value]) {
+        POTDStorage.removeItem(element);
+        fetchBookmarks();
+        setHeartColor();
+        break;
+      }
+    }
+  }
+}
 
 function fetchBookmarks() {
   list = [];
-  for (let element in myStorage) {
+  for (let element in POTDStorage) {
     let result = element.includes("Bookmark");
-    if (result) {
-      list.push(myStorage.getItem(element));
-    }
+    if (result)
+      list.push(POTDStorage.getItem(element));
   }
 
   setHeartColor();
@@ -293,38 +309,10 @@ function fetchBookmarks() {
 
   let btns = document.getElementsByClassName("bookmark-del-btn");
 
-  for (i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function () {
+  for (const button of btns) {
+    button.addEventListener("click", function () {
       removeBookmark(this.value);
     });
   }
   console.info("Bookmarks updated.");
-}
-
-async function removeBookmark(value) {
-  for (let element in myStorage) {
-    let result = element.includes("Bookmark");
-    if (result) {
-      let temp = myStorage.getItem(element);
-      if (temp == list[value]) {
-        myStorage.removeItem(element);
-        fetchBookmarks();
-        setHeartColor();
-        break;
-      }
-    }
-  }
-}
-
-function setHeartColor() {
-  bookmarkHeart.src = "/assets/heart-icon-grey.png";
-
-  for (let element in myStorage) {
-    let result = element.includes("Bookmark");
-    if (result) {
-      if (element.includes(generateKey())) {
-        bookmarkHeart.src = "/assets/heart-icon-red.png";
-      }
-    }
-  }
 }
