@@ -234,16 +234,19 @@ let question = document.getElementById("question");
 let list = [];
 
 document.addEventListener("DOMContentLoaded", function () {
-  let bookmarkIcon = document.getElementById("bookmark-heart");
-  bookmarkIcon.addEventListener("click", generateBookmark);
+  bookmarkHeart.addEventListener("click", generateBookmark);
 });
 
 //  Unitity Methods:
 function generateBookmark() {
-  let index = list.indexOf(ui_elements.problem_statement);
 
-  if(index !== -1)
-     removeBookmark(index)
+  let index = list.findIndex(item => {
+    listObject = JSON.parse(item);
+    return listObject.question == ui_elements.problem_statement
+  });
+
+  if(index != -1)
+     removeBookmark(list[index])
   else{
      let bookmarkObject = {question: question, url: ui_elements.url}
      let stringifiedObject = JSON.stringify(bookmarkObject);
