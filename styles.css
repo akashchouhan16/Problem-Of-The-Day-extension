@@ -275,21 +275,20 @@ a {
 .btn {
   width: 18vw;
   height: 15vh;
-  color: #fff;
-  background: black;
+  color: rgb(212, 212, 212);
+  background: rgb(70, 70, 70);
   cursor: pointer;
   position: relative;
-  border-radius: 10px;
-  border: rgb(207, 207, 207) groove 2px;
+  border-radius: .40rem;
+  border: rgb(0, 0, 0) groove .15rem;
+}
+.btn:hover{
+  background: rgba(128, 128, 128, 0.95);
+  color: rgb(255, 255, 255);
+  transform: scale(1.04);
+  transition: transform .1s;
 }
 
-.zoom {
-  transition: transform 0.3s;
-}
-
-.zoom:hover {
-  transform: scale(1.12);
-}
 
 .tooltiptext {
   visibility: hidden;
