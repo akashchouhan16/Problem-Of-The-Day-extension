@@ -242,8 +242,13 @@ document.addEventListener("DOMContentLoaded", function () {
 function generateBookmark() {
   let index = list.indexOf(ui_elements.problem_statement);
 
-  (index !== -1)?
-     removeBookmark(index): POTDStorage.setItem("Bookmark" + generateKey(), question);
+  if(index !== -1)
+     removeBookmark(index)
+  else{
+     let bookmarkObject = {question: question, url: ui_elements.url}
+     let stringifiedObject = JSON.stringify(bookmarkObject);
+     POTDStorage.setItem("Bookmark" + generateKey(), stringifiedObject);
+  }
   fetchBookmarks();
 }
 
@@ -261,11 +266,14 @@ function setHeartColor() {
 }
 
 async function removeBookmark(value) {
+
+  value = JSON.parse(value);
   for (let element in POTDStorage) {
     let result = element.includes("Bookmark");
     if (result) {
-      let storageItem = POTDStorage.getItem(element);
-      if (storageItem === list[value]) {
+      let storageItem = JSON.parse(POTDStorage.getItem(element));
+    
+      if (storageItem.question === value.question) {
         POTDStorage.removeItem(element);
         fetchBookmarks();
         setHeartColor();
@@ -287,15 +295,18 @@ function fetchBookmarks() {
 
   bookmarkContainer.innerHTML = "";
 
-  for (let x in list) {
+  for (let item of list) {
     let li = document.createElement("li");
     let atag = document.createElement("a");
     let img = document.createElement("img");
     let btn = document.createElement("button");
-    atag.setAttribute("target", "_blank");
-    atag.textContent = list[x];
+    let bookmarkObject = JSON.parse(item);
 
-    btn.setAttribute("value", x);
+    atag.setAttribute("target", "_blank");
+    atag.setAttribute("href", bookmarkObject.url);
+    atag.textContent = bookmarkObject.question;    
+  
+    btn.setAttribute("value", item);
     btn.setAttribute("class", "bookmark-del-btn");
 
     img.setAttribute("src", "/assets/delete-icon.png");
