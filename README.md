@@ -6,8 +6,11 @@
 [![made-for-Developers](https://img.shields.io/badge/Made%20for-Developers-426658.svg)](https://github.com/Hack-Repository/POTD-GoogleChromeExtension "POTD")
 [![GitHub issues](https://img.shields.io/github/issues/Hack-Repository/POTD-GoogleChromeExtension.svg)](https://github.com/Hack-Repository/POTD-GoogleChromeExtension/issues) ![GitHub last commit](https://img.shields.io/github/last-commit/Hack-Repository/POTD-GoogleChromeExtension.svg)
 
-A Google Chrome Browser extension to provide a daily practice problem on Data Structures and algorithms.
+A Google Chrome Browser extension to provide a daily practice problem on Data structures and algorithms as well as provide updates on competitive platform contest with just a click of a button.
 
+This extension is powered by the POTD Server @**[POTD Node.js microservice](https://github.com/Hack-Repository/POTD-Node.js-microservice "POTD Server")**.
+ 
+## Download latest Release
 > Beta Release: **[Download and add to Chrome](https://github.com/Hack-Repository/POTD-UI/blob/main/README.md#Beta-Installation "Download from Github")**
 
 ## About 
@@ -18,21 +21,23 @@ extension to the users. Users are exposed a daily practice problem, which are fr
 750+ problems, curated by software engineers from Google & Directi.
 
 * The Curated selection of important coding interview questions were hand-picked from existing lists that includes but are not limited to Striver's SDE Sheet, 450 DSA Sheet, and many more.
-* The extension is presently available as a beta release and is not yet available on the Chrome Store.
+* The extension is presently available as a beta release to generate user feedback, and is not yet available on the Chrome Store.
 > Updates: v1.0.1
 * **ContestsAPI**: Get Access to all upcoming global contests on platforms including **KickStart**, **Codeforces**, **AtCoder**, **Codechef**, **LeetCode** and more.
-* **Bookmark Problems**: Add problems as a bookmark to revisit the challenges later.
-* **Faster Load Time**: Optimised load times with client-side caching and storage. 
+* **Bookmark Problems**: Add or remove problems from bookmarks' tab, which is baked into the extension. Revisit the daily challenges later.
+* **Faster Load Time**: Optimized load times with both client-side & server-side data caching and storage. 
 
+---
 ## Application Preview
 
+#### **Extension UI:**
 ![POTD Extension](./assets/ui_potd_1.0.1.gif)
 
-### **Get Upcoming Contest Details**
-![POTD ContestsAPI](./assets/ui_contestsapi_1.0.1.gif)
+#### **Get Upcoming Contest Details:**
+![POTD ContestsAPI](./assets/ui_potd_contests.gif)
 
-### **Save Problem Of The Day as Bookmark**
-![POTD Bookmark](./assets/ui_bokkmark_1.0.1.gif)
+#### **Save POTD Coding Challenges as Bookmark:**
+![POTD Bookmark](./assets/ui_potd_bookmarks.gif)
 
 ---
 ## Beta Installation
