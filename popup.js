@@ -237,11 +237,11 @@ document.addEventListener("DOMContentLoaded", function () {
   bookmarkHeart.addEventListener("click", generateBookmark);
 });
 
-//  Unitity Methods:
+//  Utility Methods:
 function generateBookmark() {
 
   let index = list.findIndex(item => {
-    listObject = JSON.parse(item);
+    let listObject = JSON.parse(item);
     return listObject.question == ui_elements.problem_statement
   });
 
