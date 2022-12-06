@@ -1,8 +1,8 @@
 //Preloader
 let loader = document.getElementById("preloader");
 let loadergif = document.getElementById("loadgif");
-const problemsAPI_url = "https://problemoftheday-server.herokuapp.com/problemoftheday?key=";
-const contestAPI_url = "https://problemoftheday-server.herokuapp.com/contests/";
+const problemsAPI_url = "https://potd-node-service-1.vercel.app/problemoftheday?key=";
+const contestAPI_url = "https://potd-node-service-1.vercel.app/contests/";
 
 let POTDStorage = window.localStorage;
 let ui_elements = {
