@@ -202,7 +202,14 @@ document
 // Utility Methods:
 async function getContestDetails(platform) {
   try {
-    const response = await fetch(contestAPI_url + platform);
+    let url = contestAPI_url
+    if (platform) { 
+      url = url + platform;
+    } else {
+      url = url + '0';
+    }
+    
+    const response = await fetch(url);
     const data = await response.json();
 
     // Update Contests UI
